@@ -186,17 +186,14 @@ def create_voter_a4_pdf(
 
     mode: str = Form("preview"),
 
-    crop_top: float = Form(72.4),
+    crop_top: float = Form(11.3),
+crop_bottom: float = Form(29.8),
 
-    crop_bottom: float = Form(92.7),
+front_left: float = Form(5.2),
+front_right: float = Form(46.9),
 
-    front_left: float = Form(7.8),
-
-    front_right: float = Form(49.2),
-
-    back_left: float = Form(50.7),
-
-    back_right: float = Form(92.2),
+back_left: float = Form(55.0),
+back_right: float = Form(96.3),
 
 ):
 
