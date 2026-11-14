@@ -8,10 +8,9 @@ from PIL import Image, ImageDraw
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import FileResponse, Response
 
-
 BASE_DIR = Path(__file__).resolve().parent
 
-app = FastAPI(title="Voter ID Rounded Front Back A4")
+app = FastAPI(title="DK Jan Suvidha Kendra - Voter ID Print")
 
 MAX_FILE_BYTES = 15 * 1024 * 1024
 
@@ -20,7 +19,6 @@ MM_TO_POINTS = 72 / 25.4
 PAGE_WIDTH_INCHES = 8.267
 PAGE_HEIGHT_INCHES = 11.693
 
-# Standard ID-1 card dimensions
 CARD_WIDTH_MM = 85.6
 CARD_HEIGHT_MM = 53.98
 
@@ -53,10 +51,8 @@ def make_rounded_png(pixmap, radius_points, width_points):
         pixmap.samples,
     ).convert("RGBA")
 
-    radius_pixels = radius_points * image.width / width_points
-
     radius_pixels = min(
-        radius_pixels,
+        radius_points * image.width / width_points,
         min(image.size) / 2,
     )
 
@@ -84,7 +80,6 @@ def make_rounded_png(pixmap, radius_points, width_points):
     image.putalpha(mask)
 
     buffer = io.BytesIO()
-
     image.save(buffer, format="PNG")
 
     return buffer.getvalue()
@@ -111,7 +106,6 @@ def place_card(output_page, source_page, crop_rect, card_box):
     fitted_height = fitted_width / image_ratio
 
     if fitted_height > available_height:
-
         fitted_height = available_height
         fitted_width = fitted_height * image_ratio
 
@@ -187,13 +181,16 @@ def create_voter_a4_pdf(
     mode: str = Form("preview"),
 
     crop_top: float = Form(11.3),
-crop_bottom: float = Form(29.8),
 
-front_left: float = Form(5.2),
-front_right: float = Form(46.9),
+    crop_bottom: float = Form(29.8),
 
-back_left: float = Form(55.0),
-back_right: float = Form(96.3),
+    front_left: float = Form(5.2),
+
+    front_right: float = Form(46.9),
+
+    back_left: float = Form(55.0),
+
+    back_right: float = Form(96.3),
 
 ):
 
@@ -208,14 +205,12 @@ back_right: float = Form(96.3),
         pdf_data = file.file.read(MAX_FILE_BYTES + 1)
 
         if not pdf_data:
-
             raise HTTPException(
                 status_code=400,
                 detail="Please select a PDF file.",
             )
 
         if len(pdf_data) > MAX_FILE_BYTES:
-
             raise HTTPException(
                 status_code=413,
                 detail="Maximum PDF file size is 15 MB.",
@@ -234,7 +229,6 @@ back_right: float = Form(96.3),
             math.isfinite(value) and 0 <= value <= 100
             for value in values
         ):
-
             raise HTTPException(
                 status_code=400,
                 detail="Crop values must be between 0 and 100.",
@@ -245,7 +239,6 @@ back_right: float = Form(96.3),
             and front_left < front_right
             and back_left < back_right
         ):
-
             raise HTTPException(
                 status_code=400,
                 detail="Invalid crop boundaries.",
@@ -259,14 +252,12 @@ back_right: float = Form(96.3),
             if source_pdf.needs_pass:
 
                 if not source_pdf.authenticate(password):
-
                     raise HTTPException(
                         status_code=400,
                         detail="PDF password is missing or incorrect.",
                     )
 
             if source_pdf.page_count < 1:
-
                 raise HTTPException(
                     status_code=400,
                     detail="The PDF contains no pages.",
@@ -275,7 +266,6 @@ back_right: float = Form(96.3),
             source_page = source_pdf[0]
 
             if source_page.rotation != 0:
-
                 raise HTTPException(
                     status_code=400,
                     detail="Use an upright PDF without page rotation.",
@@ -283,15 +273,15 @@ back_right: float = Form(96.3),
 
             bounds = source_page.rect
 
+            # Large e-EPIC PDF page size support
             if (
                 bounds.width <= 0
                 or bounds.height <= 0
-                or max(bounds.width, bounds.height) > 2000
+                or max(bounds.width, bounds.height) > 10000
             ):
-
                 raise HTTPException(
                     status_code=400,
-                    detail="Unsupported PDF page size.",
+                    detail="PDF page dimensions are invalid or excessively large.",
                 )
 
             def make_crop(left_percent, right_percent):
@@ -303,8 +293,6 @@ back_right: float = Form(96.3),
                     bounds.y0 + bounds.height * crop_bottom / 100,
                 )
 
-            # Front and Back crop areas
-
             crops = [
                 make_crop(front_left, front_right),
                 make_crop(back_left, back_right),
@@ -313,7 +301,6 @@ back_right: float = Form(96.3),
             for crop in crops:
 
                 if crop.width < 10 or crop.height < 10:
-
                     raise HTTPException(
                         status_code=400,
                         detail="Selected crop area is too small.",
@@ -383,7 +370,6 @@ back_right: float = Form(96.3),
         raise
 
     except Exception:
-
         raise HTTPException(
             status_code=400,
             detail=(
@@ -393,5 +379,4 @@ back_right: float = Form(96.3),
         )
 
     finally:
-
         file.file.close()
