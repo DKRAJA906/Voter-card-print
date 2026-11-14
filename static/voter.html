@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102a43">
+    <title>DK Jan Suvidha Kendra | Voter ID Print</title>
+    <style>
+    :root{--navy:#102a43;--blue:#1769aa;--cyan:#19a7ce;--ink:#172b4d;--muted:#62748a;--line:#dce6ef;--bg:#f2f6fb;--white:#fff;--green:#16834a;--red:#c0392b}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Devanagari",Segoe UI,sans-serif}
+    .top{background:linear-gradient(120deg,#102a43,#145b87);color:#fff;padding:26px 16px 34px;text-align:center;border-bottom:5px solid #f2a900}
+    .brand{display:inline-flex;align-items:center;gap:12px;text-align:left}.logo{width:54px;height:54px;border-radius:15px;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;font-size:18px;box-shadow:0 5px 16px #0003}.brand h1{font-size:clamp(19px,4vw,27px);margin:0;letter-spacing:.3px}.brand p{margin:4px 0 0;color:#d8edf9;font-size:13px}
+    .tag{margin:18px auto 0;display:inline-block;border:1px solid #ffffff55;border-radius:99px;padding:7px 14px;font-size:13px;color:#eaf7ff}
+    main{width:min(920px,calc(100% - 28px));margin:-18px auto 36px;position:relative}.panel{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,4vw,30px);box-shadow:0 12px 35px #193b5b12}
+    h2{margin:0 0 7px;font-size:22px}.intro{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 22px}
+    .drop{border:2px dashed #9bbbd2;background:#f7fbff;border-radius:16px;padding:25px 16px;text-align:center;transition:.2s;cursor:pointer}.drop.drag{border-color:var(--blue);background:#edf7ff}.upload-icon{width:48px;height:48px;margin:0 auto 10px;border-radius:14px;background:#e4f2fb;color:var(--blue);display:grid;place-items:center;font-size:25px}.drop strong{display:block;font-size:16px}.drop small{display:block;color:var(--muted);margin-top:6px}.drop input{display:none}.file-name{margin-top:12px;font-size:13px;color:var(--green);font-weight:650;overflow-wrap:anywhere}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 13px;font:inherit;background:#fff;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1769aa18}.hint{font-size:12px;color:var(--muted);margin-top:6px}
+    details{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:12px 14px}summary{font-weight:700;font-size:14px;cursor:pointer}.crop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.btn{border:0;border-radius:12px;padding:13px 20px;font:inherit;font-weight:750;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px}.btn:disabled{opacity:.55;cursor:not-allowed}.primary{background:linear-gradient(110deg,var(--blue),var(--cyan));color:white;flex:1}.secondary{background:#eaf2f8;color:var(--navy);flex:1}
+    .status{display:none;margin-top:16px;padding:12px 14px;border-radius:11px;font-size:14px;line-height:1.6}.status.show{display:block}.status.error{background:#fff0ee;color:var(--red);border:1px solid #ffd0ca}.status.ok{background:#edf9f1;color:#176b3d;border:1px solid #c9ebd5}.preview{display:none;margin-top:22px}.preview.show{display:block}.preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.preview h3{margin:0;font-size:17px}.preview iframe{width:100%;height:650px;border:1px solid var(--line);border-radius:12px;background:#eef2f6}
+    .notice{margin-top:20px;background:#fff9e9;border:1px solid #f3dfaa;color:#6c5315;border-radius:12px;padding:13px 15px;font-size:12px;line-height:1.7}.foot{text-align:center;color:#75869a;font-size:12px;padding:18px 10px 28px}.foot strong{color:#456078}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}.crop-grid{grid-template-columns:1fr 1fr}.actions{flex-direction:column}.preview iframe{height:520px}.brand{justify-content:center}.top{padding-top:22px}}
+  </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <div class="logo">DK</div>
+        <div>
+          <h1>DK JAN SUVIDHA KENDRA</h1>
+          <p>Aapki Seva Mein Hamesha Tatpar</p>
+        </div>
+      </div>
+      <div class="tag">Voter ID Card • A4 Print • HD PDF</div>
+    </header>
+    <main>
+      <section class="panel">
+        <h2>Voter ID कार्ड प्रिंट करें</h2>
+        <p class="intro">अपनी e-EPIC PDF अपलोड करें। सिस्टम कार्ड के Front और Back हिस्से को अलग करके A4 शीट पर प्रिंट के लिए तैयार करेगा।</p>
+        <form id="printForm">
+          <label class="drop" id="dropArea" for="pdfFile">
+            <span class="upload-icon">⇧</span>
+            <strong>PDF फाइल चुनें या यहाँ छोड़ें</strong>
+            <small>केवल PDF • अधिकतम 15 MB</small>
+            <div class="file-name" id="fileName">अभी कोई फाइल नहीं चुनी गई</div>
+            <input id="pdfFile" name="file" type="file" accept="application/pdf,.pdf" required>
+          </label>
+          <div class="grid">
+            <div class="field">
+              <label for="password">PDF पासवर्ड (यदि लगा हो)</label>
+              <input id="password" name="password" type="password" placeholder="पासवर्ड वैकल्पिक है" autocomplete="off">
+            </div>
+            <div class="field">
+              <label>आउटपुट पेपर</label>
+              <input value="A4 • Portrait • 300 DPI" readonly>
+              <div class="hint">कार्ड का निर्धारित आकार: 85.6 × 53.98 mm</div>
+            </div>
+          </div>
+          <details>
+            <summary>Advanced Crop Settings (जरूरत पड़ने पर)</summary>
+            <div class="crop-grid">
+              <div class="field">
+                <label for="crop_top">Crop Top (%)</label>
+                <input id="crop_top" name="crop_top" type="number" step="0.1" min="0" max="100" value="11.3">
+              </div>
+              <div class="field">
+                <label for="crop_bottom">Crop Bottom (%)</label>
+                <input id="crop_bottom" name="crop_bottom" type="number" step="0.1" min="0" max="100" value="29.8">
+              </div>
+              <div class="field">
+                <label for="front_left">Front Left (%)</label>
+                <input id="front_left" name="front_left" type="number" step="0.1" min="0" max="100" value="5.2">
+              </div>
+              <div class="field">
+                <label for="front_right">Front Right (%)</label>
+                <input id="front_right" name="front_right" type="number" step="0.1" min="0" max="100" value="46.9">
+              </div>
+              <div class="field">
+                <label for="back_left">Back Left (%)</label>
+                <input id="back_left" name="back_left" type="number" step="0.1" min="0" max="100" value="55.0">
+              </div>
+              <div class="field">
+                <label for="back_right">Back Right (%)</label>
+                <input id="back_right" name="back_right" type="number" step="0.1" min="0" max="100" value="96.3">
+              </div>
+            </div>
+            <p class="hint">ये शुरुआती सेटिंग आपके भेजे गए e-EPIC नमूने के लिए हैं। दूसरे PDF लेआउट में इन्हें समायोजित करना पड़ सकता है।</p>
+          </details>
+          <div class="actions">
+            <button class="btn primary" id="previewBtn" type="submit">▣ &nbsp; Preview बनाएं</button>
+            <button class="btn secondary" id="downloadBtn" type="button" disabled>↓ &nbsp; PDF Download</button>
+          </div>
+        </form>
+        <div class="status" id="status" role="status" aria-live="polite">
+        </div>
+        <section class="preview" id="previewSection">
+          <div class="preview-head">
+            <h3>आपका A4 प्रिंट Preview</h3>
+            <span class="hint">प्रिंट करने से पहले जाँच लें</span>
+          </div>
+          <iframe id="pdfPreview" title="Voter ID A4 PDF Preview">
+          </iframe>
+        </section>
+        <div class="notice">
+          <strong>गोपनीयता सूचना:</strong> इस टूल का उपयोग केवल अधिकृत e-EPIC दस्तावेज़ की प्रिंट कॉपी बनाने के लिए करें। PDF को वेबसाइट पर स्थायी रूप से सेव नहीं किया जाता; फिर भी अपलोड केवल अपने भरोसेमंद/सुरक्षित नेटवर्क पर करें। कार्ड की जानकारी में कोई बदलाव नहीं किया जाता।</div>
+        </section>
+      </main>
+      <footer class="foot">
+        <strong>DK JAN SUVIDHA KENDRA</strong>
+        <br>Rani Kheda Chauraha, Bachhrawan</footer>
+        <script>
+(() => {
+  const form = document.getElementById('printForm');
+  const fileInput = document.getElementById('pdfFile');
+  const fileName = document.getElementById('fileName');
+  const dropArea = document.getElementById('dropArea');
+  const statusBox = document.getElementById('status');
+  const previewSection = document.getElementById('previewSection');
+  const previewFrame = document.getElementById('pdfPreview');
+  const previewBtn = document.getElementById('previewBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  let currentPdfUrl = null;
+  let ready = false;
+
+  function showStatus(message, type='ok') {
+    statusBox.textContent = message;
+    statusBox.className = `status show ${type}`;
+  }
+  function selectedFile() {
+    const f = fileInput.files && fileInput.files[0];
+    if (!f) throw new Error('पहले अपनी Voter ID PDF चुनें।');
+    if (f.type !== 'application/pdf' && !f.name.toLowerCase().endsWith('.pdf')) throw new Error('कृपया केवल PDF फाइल चुनें।');
+    if (f.size > 15 * 1024 * 1024) throw new Error('PDF का आकार 15 MB से कम होना चाहिए।');
+    return f;
+  }
+  function makeFormData(mode) {
+    const data = new FormData(form);
+    data.set('mode', mode);
+    return data;
+  }
+  async function requestPdf(mode) {
+    const response = await fetch('/api/voter-a4', { method: 'POST', body: makeFormData(mode) });
+    if (!response.ok) {
+      let message = 'PDF तैयार नहीं हो सकी। कृपया फाइल और सेटिंग जाँचें।';
+      try { const body = await response.json(); if (body.detail) message = body.detail; } catch (_) {}
+      throw new Error(message);
+    }
+    return await response.blob();
+  }
+  fileInput.addEventListener('change', () => {
+    ready = false; downloadBtn.disabled = true;
+    fileName.textContent = fileInput.files[0] ? fileInput.files[0].name : 'अभी कोई फाइल नहीं चुनी गई';
+    previewSection.classList.remove('show');
+  });
+  ['dragenter','dragover'].forEach(evt => dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(evt => dropArea.addEventListener(evt, e => { e.preventDefault(); dropArea.classList.remove('drag'); }));
+  dropArea.addEventListener('drop', e => {
+    const f = e.dataTransfer.files[0];
+    if (f) { const transfer = new DataTransfer(); transfer.items.add(f); fileInput.files = transfer.files; fileInput.dispatchEvent(new Event('change')); }
+  });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    try {
+      selectedFile();
+      previewBtn.disabled = true; downloadBtn.disabled = true;
+      previewBtn.textContent = 'बनाया जा रहा है…';
+      showStatus('आपकी PDF प्रोसेस हो रही है, कृपया प्रतीक्षा करें।');
+      const blob = await requestPdf('preview');
+      if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+      currentPdfUrl = URL.createObjectURL(blob);
+      previewFrame.src = currentPdfUrl;
+      previewSection.classList.add('show');
+      ready = true; downloadBtn.disabled = false;
+      showStatus('आपका A4 Preview तैयार है। डाउनलोड करने से पहले कार्ड की जाँच कर लें।');
+    } catch (err) { showStatus(err.message, 'error'); }
+    finally { previewBtn.disabled = false; previewBtn.textContent = '▣  Preview बनाएं'; }
+  });
+  downloadBtn.addEventListener('click', async () => {
+    try {
+      if (!ready) throw new Error('पहले Preview बनाएं।');
+      selectedFile();
+      downloadBtn.disabled = true; downloadBtn.textContent = 'तैयार हो रहा है…';
+      const blob = await requestPdf('download');
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'voter-id-rounded-a4.pdf';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      showStatus('PDF डाउनलोड शुरू हो गया है।');
+    } catch (err) { showStatus(err.message, 'error'); }
+    finally { downloadBtn.disabled = !ready; downloadBtn.textContent = '↓  PDF Download'; }
+  });
+  window.addEventListener('beforeunload', () => { if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl); });
+})();
+</script>
+      </body>
+    </html>
